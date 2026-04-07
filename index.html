@@ -265,7 +265,7 @@ document.getElementById("form").addEventListener("submit", async e=>{
     fecha_coord: new Date().toISOString()
   };
 
-  await fetch("/registro_alturas", {
+  await fetch(`${API_URL}/registro_alturas`, {
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body: JSON.stringify(data)

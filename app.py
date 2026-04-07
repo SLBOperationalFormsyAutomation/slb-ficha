@@ -31,8 +31,13 @@ def data_alturas():
 def home():
     return render_template("index.html")
 
-@app.route("/registro_alturas", methods=["POST"])
+@app.route("/registro_alturas", methods=["POST", "OPTIONS"])
 def registro_alturas():
+
+    # 🔥 RESPUESTA AL PREFLIGHT
+    if request.method == "OPTIONS":
+        return jsonify({"ok": True}), 200
+
     data = request.json
 
     try:
