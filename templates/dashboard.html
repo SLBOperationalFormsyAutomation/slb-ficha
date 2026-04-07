@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard SLB</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+  font-family: Arial;
+  background: #001f3d;
+  color: white;
+  text-align: center;
+}
+
+.card {
+  background: white;
+  color: black;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+canvas {
+  max-width: 400px;
+  margin: auto;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Dashboard Salud Alturas</h1>
+
+<div class="card">
+  <h3>Total Registros</h3>
+  <h2 id="total"></h2>
+</div>
+
+<div class="card">
+  <h3>Respuestas con Riesgo (SI)</h3>
+  <canvas id="riesgos"></canvas>
+</div>
+
+<script>
+
+fetch("/data_alturas")
+.then(res => res.json())
+.then(data => {
+
+  document.getElementById("total").innerText = data.length;
+
+  let riesgos = 0;
+  let seguros = 0;
+
+  data.forEach(r => {
+    let tieneRiesgo = false;
+
+    for(let i=1;i<=10;i++){
+      if(r["pregunta"+i] === "SI"){
+        tieneRiesgo = true;
+      }
+    }
+
+    if(tieneRiesgo) riesgos++;
+    else seguros++;
+  });
+
+  new Chart(document.getElementById("riesgos"), {
+    type: "pie",
+    data: {
+      labels: ["Riesgo", "Apto"],
+      datasets: [{
+        data: [riesgos, seguros]
+      }]
+    }
+  });
+
+});
+
+</script>
+
+</body>
+</html>

@@ -11,6 +11,22 @@ CORS(app)
 SUPABASE_URL = "https://pcjpnogwigzcmetglbyw.supabase.co"
 SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjanBub2d3aWd6Y21ldGdsYnl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1ODc5ODYsImV4cCI6MjA5MTE2Mzk4Nn0.vbuUAYfeWcy_BkY7cKvHlGfvSCUIEpEqlg_Ql1MfuM8"
 
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
+
+
+@app.route("/data_alturas")
+def data_alturas():
+    url = f"{SUPABASE_URL}/rest/v1/autorreporte_alturas"
+    headers = {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": f"Bearer {SUPABASE_ANON_KEY}"
+    }
+
+    r = requests.get(url, headers=headers)
+    return jsonify(r.json())
+
 @app.route("/")
 def home():
     return render_template("index.html")
