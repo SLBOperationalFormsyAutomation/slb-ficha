@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Auto Reporte Alturas</title>
+
+<style>
+body {
+  font-family: Arial;
+  background-image: url('/static/Fondo.png');
+  background-size: cover;
+  margin: 0;
+}
+
+form {
+  background: rgba(255,255,255,0.95);
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 500px;
+  border-radius: 10px;
+}
+
+h2, h3 {
+  text-align: center;
+  color: #002855;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+canvas {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background: #002855;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<form id="form">
+
+<h2>Auto Reporte Trabajo en Alturas</h2>
+
+<label>Nombre</label>
+<input id="nombre" required>
+
+<label>Documento</label>
+<input id="documento" required>
+
+<label>Empresa</label>
+<input id="empresa">
+
+<label>Base/Pozo</label>
+<input id="base_pozo">
+
+<label>Cliente</label>
+<input id="cliente">
+
+<label>EPS</label>
+<input id="eps">
+
+<label>ARL</label>
+<input id="arl">
+
+<hr>
+
+<label>¿Médico en locación?</label>
+<select id="medico">
+<option value="no">No</option>
+<option value="si">Sí</option>
+</select>
+
+<div id="medicoCampos" style="display:none;">
+<label>Tensión</label>
+<input id="tension">
+
+<label>Frecuencia</label>
+<input id="frecuencia">
+
+<label>Oxígeno</label>
+<input id="oxigeno">
+</div>
+
+<h3>Condiciones</h3>
+<div id="preguntas"></div>
+
+<label>
+<input type="checkbox" id="certifica" required>
+Certifico que la información es veraz
+</label>
+
+<h3>Firma Trabajador</h3>
+<canvas id="firma1"></canvas>
+
+<h3>Firma Coordinador</h3>
+<canvas id="firma2"></canvas>
+
+<button type="submit">Enviar</button>
+
+</form>
+
+<script>
+
+// 🔹 preguntas
+const preguntasTexto = [
+"Examen médico vigente?",
+"Cambio estado ánimo?",
+"Mareo o vértigo?",
+"Dolor físico?",
+"Problemas auditivos?",
+"Enfermedad reciente?",
+"Problemas visuales?",
+"Dificultad respiratoria?",
+"Medicamentos?",
+"Alcohol o sustancias?"
+];
+
+const cont = document.getElementById("preguntas");
+
+preguntasTexto.forEach((p, i) => {
+  cont.innerHTML += `
+    <label>${i+1}. ${p}</label>
+    <select id="p${i}">
+      <option value="NO">NO</option>
+      <option value="SI">SI</option>
+    </select>
+  `;
+});
+
+// 🔹 medico
+document.getElementById("medico").addEventListener("change", e => {
+  document.getElementById("medicoCampos").style.display =
+    e.target.value === "si" ? "block" : "none";
+});
+
+// 🔹 firma
+function activarFirma(canvas){
+  const ctx = canvas.getContext("2d");
+  let dibujando = false;
+
+  canvas.addEventListener("mousedown", e=>{
+    dibujando = true;
+    ctx.moveTo(e.offsetX, e.offsetY);
+  });
+
+  canvas.addEventListener("mousemove", e=>{
+    if(dibujando){
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+    }
+  });
+
+  canvas.addEventListener("mouseup", ()=>dibujando=false);
+
+  canvas.addEventListener("touchmove", e=>{
+    const rect = canvas.getBoundingClientRect();
+    const t = e.touches[0];
+    ctx.lineTo(t.clientX-rect.left, t.clientY-rect.top);
+    ctx.stroke();
+  });
+}
+
+activarFirma(document.getElementById("firma1"));
+activarFirma(document.getElementById("firma2"));
+
+// 🔹 submit
+document.getElementById("form").addEventListener("submit", async e=>{
+  e.preventDefault();
+
+  const preguntas = [];
+  for(let i=0;i<10;i++){
+    preguntas.push(document.getElementById("p"+i).value);
+  }
+
+  const data = {
+    nombre: nombre.value,
+    documento: documento.value,
+    empresa: empresa.value,
+    base_pozo: base_pozo.value,
+    cliente: cliente.value,
+    eps: eps.value,
+    arl: arl.value,
+
+    tension: tension.value,
+    frecuencia: frecuencia.value,
+    oxigeno: oxigeno.value,
+
+    certifica: document.getElementById("certifica").checked,
+    preguntas,
+
+    firma_trabajador: firma1.toDataURL(),
+    firma_coordinador: firma2.toDataURL(),
+
+    nombre_trabajador: nombre.value,
+    doc_trabajador: documento.value,
+    rol_trabajador: "Trabajador",
+    fecha_trabajador: new Date().toISOString(),
+
+    nombre_coord: "",
+    doc_coord: "",
+    rol_coord: "Coordinador",
+    fecha_coord: new Date().toISOString()
+  };
+
+  await fetch("/registro_alturas", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify(data)
+  });
+
+  alert("Enviado correctamente ✅");
+});
+
+</script>
+
+</body>
+</html>
