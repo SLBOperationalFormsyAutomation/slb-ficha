@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 import requests
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=".")
 CORS(app)
 
 # 🔐 CONFIGURACIÓN SUPABASE
