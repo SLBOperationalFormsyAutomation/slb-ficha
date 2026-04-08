@@ -2,6 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+
+<!-- 🔹 LOGO EN PESTAÑA -->
+<link rel="icon" type="image/png" href="logo.png">
+
+
 <title>Login Admin</title>
 
 <style>
@@ -57,7 +62,9 @@ button{
 
 function login(){
 
-  fetch("/login_check", {
+const API_URL = "https://slb-alturas.onrender.com";
+
+    fetch(`${API_URL}/login_check`, {
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body: JSON.stringify({
@@ -67,7 +74,7 @@ function login(){
   })
   .then(r=>{
     if(r.ok){
-      window.location.href = "/dashboard";
+      window.location.href = "https://slboperationalformsyautomation.github.io/slb-ficha/dashboard.html";
     }else{
       alert("Credenciales incorrectas ❌");
     }

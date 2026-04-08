@@ -95,9 +95,21 @@ button {
 
 <body>
 
-<button onclick="irAdmin()" style="background:black;margin-bottom:10px;">
-⚙️ Admin
-</button>
+<div style="position:fixed; top:10px; right:10px;">
+  <button onclick="irAdmin()" style="
+    background:#007BFF;
+    border:none;
+    border-radius:50%;
+    width:45px;
+    height:45px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  ">
+    👤
+  </button>
+</div>
 
 <form id="form">
 
@@ -246,7 +258,7 @@ document.getElementById("form").addEventListener("submit", async e=>{
 });
 
 function irAdmin(){
-  window.location.href = "/login";
+  window.location.href = "https://slboperationalformsyautomation.github.io/slb-ficha/login.html";
 }
 </script>
 
