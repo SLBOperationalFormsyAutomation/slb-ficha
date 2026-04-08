@@ -13,6 +13,21 @@ SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 def hora_colombia():
     return (datetime.utcnow() - timedelta(hours=5)).isoformat()
 
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+
+@app.route("/login_check", methods=["POST"])
+def login_check():
+
+    data = request.json
+
+    if data["user"] == "admin" and data["pass"] == "admin":
+        return jsonify({"ok": True})
+    else:
+        return jsonify({"ok": False}), 401
+
 @app.route("/")
 def home():
     return render_template("index.html")

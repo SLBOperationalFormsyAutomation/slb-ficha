@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Login Admin</title>
+
+<style>
+body{
+  font-family:Arial;
+  background:#002855;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.box{
+  background:white;
+  color:black;
+  padding:30px;
+  border-radius:10px;
+  width:300px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+}
+
+button{
+  width:100%;
+  margin-top:15px;
+  padding:10px;
+  background:#002855;
+  color:white;
+  border:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>Login Admin</h2>
+
+<input id="user" placeholder="Usuario">
+<input id="pass" type="password" placeholder="Contraseña">
+
+<button onclick="login()">Entrar</button>
+
+</div>
+
+<script>
+
+function login(){
+
+  fetch("/login_check", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      user: user.value,
+      pass: pass.value
+    })
+  })
+  .then(r=>{
+    if(r.ok){
+      window.location.href = "/dashboard";
+    }else{
+      alert("Credenciales incorrectas ❌");
+    }
+  })
+
+}
+
+</script>
+
+</body>
+</html>

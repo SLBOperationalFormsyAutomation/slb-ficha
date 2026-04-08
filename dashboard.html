@@ -60,24 +60,28 @@ fetch("/data_ficha")
 
 function descargarExcel(){
 
-    let csv = ""
+    if(!registros || registros.length === 0){
+        alert("No hay datos para descargar ❌");
+        return;
+    }
 
-    // encabezados
-    const headers = Object.keys(registros[0])
-    csv += headers.join(",") + "\n"
+    let csv = "";
+
+    const headers = Object.keys(registros[0]);
+    csv += headers.join(",") + "\n";
 
     registros.forEach(r=>{
-        let row = headers.map(h => `"${(r[h] || "").toString().replace(/"/g,'""')}"`)
-        csv += row.join(",") + "\n"
-    })
+        let row = headers.map(h => `"${(r[h] || "").toString().replace(/"/g,'""')}"`);
+        csv += row.join(",") + "\n";
+    });
 
-    const blob = new Blob([csv], { type: "text/csv" })
-    const url = window.URL.createObjectURL(blob)
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
 
-    const a = document.createElement("a")
-    a.href = url
-    a.download = "ficha_medica.csv"
-    a.click()
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "ficha_medica.csv";
+    a.click();
 }
 
 </script>
