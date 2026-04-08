@@ -10,6 +10,20 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<div style="position:fixed; top:10px; right:10px;">
+  <button onclick="logout()" style="
+    background:#ff4d4d;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+  ">
+    Cerrar sesión
+  </button>
+</div>
+
 <style>
 body{
   font-family:Arial;
@@ -67,6 +81,10 @@ fetch(`${API_URL}/data_ficha`)
     console.log("Error cargando datos:", err);
 });
 
+function logout(){
+    window.location.href = "https://slboperationalformsyautomation.github.io/slb-ficha/";
+}
+
 function descargarExcel(){
 
     if(!registros || registros.length === 0){
@@ -74,22 +92,81 @@ function descargarExcel(){
         return;
     }
 
-    let csv = "";
+    // 🔹 ORDEN EXACTO (igual que Supabase)
+    const headers = [
+        "nombre",
+        "documento",
+        "fecha_nacimiento",
+        "empresa",
+        "cargo",
+        "locacion",
+        "fecha_ingreso",
+        "telefono",
+        "correo",
+        "eps",
+        "arl",
+        "enfermedad_actual",
+        "enfermedades",
+        "otra_enfermedad",
+        "cirugias",
+        "traumas",
+        "medicamentos",
+        "sangre",
+        "alergias",
+        "condicion",
+        "emergencia",
+        "fecha_registro"
+    ];
 
-    const headers = Object.keys(registros[0]);
-    csv += headers.join(",") + "\n";
+    // 🔹 NOMBRES BONITOS
+    const headersBonitos = [
+        "Nombre",
+        "Documento",
+        "Fecha Nacimiento",
+        "Empresa",
+        "Cargo",
+        "Locación",
+        "Fecha Ingreso",
+        "Teléfono",
+        "Correo",
+        "EPS",
+        "ARL",
+        "Enfermedad Actual",
+        "Diagnóstico",
+        "Otra Enfermedad",
+        "Cirugías",
+        "Traumas",
+        "Medicamentos",
+        "Tipo de Sangre",
+        "Alergias",
+        "Condición Médica",
+        "Contacto Emergencia",
+        "Fecha Registro"
+    ];
+
+    let html = `
+    <table border="1">
+        <tr style="background-color:#002855;color:white;font-weight:bold;">
+            ${headersBonitos.map(h => `<th>${h}</th>`).join("")}
+        </tr>
+    `;
 
     registros.forEach(r=>{
-        let row = headers.map(h => `"${(r[h] || "").toString().replace(/"/g,'""')}"`);
-        csv += row.join(",") + "\n";
+        html += "<tr>";
+        headers.forEach(h=>{
+            html += `<td>${r[h] || ""}</td>`;
+        });
+        html += "</tr>";
     });
 
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
+    html += "</table>";
+
+    const blob = new Blob([html], { type: "application/vnd.ms-excel" });
+    const url = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "ficha_medica.csv";
+    a.download = "ficha_medica.xls";
     a.click();
 }
 
