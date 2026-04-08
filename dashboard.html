@@ -121,27 +121,27 @@ function descargarExcel(){
     // 🔹 NOMBRES BONITOS
     const headersBonitos = [
         "Nombre",
-        "Documento",
+        "Documento de Identidad",
         "Fecha Nacimiento",
         "Empresa",
         "Cargo",
-        "Locación",
+        "Locacion",
         "Fecha Ingreso",
-        "Teléfono",
+        "Telefono",
         "Correo",
         "EPS",
         "ARL",
         "Enfermedad Actual",
-        "Diagnóstico",
+        "Diagnostico",
         "Otra Enfermedad",
-        "Cirugías",
+        "Cirugias",
         "Traumas",
         "Medicamentos",
         "Tipo de Sangre",
         "Alergias",
-        "Condición Médica",
-        "Contacto Emergencia",
-        "Fecha Registro"
+        "Condicion Medica",
+        "Contacto de Emergencia",
+        "Fecha de Registro"
     ];
 
     let html = `
@@ -151,14 +151,19 @@ function descargarExcel(){
         </tr>
     `;
 
-    registros.forEach(r=>{
+    registros.forEach((r, index)=>{
         html += "<tr>";
+
+        // 🔥 ID automático
+        html += `<td>${index + 1}</td>`;
+
         headers.forEach(h=>{
             html += `<td>${r[h] || ""}</td>`;
         });
+
         html += "</tr>";
     });
-
+    
     html += "</table>";
 
     const blob = new Blob([html], { type: "application/vnd.ms-excel" });
