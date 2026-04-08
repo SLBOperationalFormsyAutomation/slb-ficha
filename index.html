@@ -119,8 +119,6 @@ button {
 
 <form id="form">
 
-<img src="encabezado.png" class="banner">
-
 <h2>FICHA MÉDICA</h2>
 
 <p style="text-align: justify; line-height: 1.6;">
@@ -166,6 +164,13 @@ Bienvenido a Helmerich & Payne Colombia, estamos comprometidos a proteger su sal
   <option>Rig T618</option>
   <option>Otro</option>
 </select>
+
+<div id="otraLocacionContainer" style="display:none;">
+  <div class="subtexto">
+    Especifique la locación
+  </div>
+  <input id="otra_locacion" placeholder="Escriba la locación">
+</div>
 
 <div class="field-title">Fecha de ingreso</div>
 <div class="subtexto">
@@ -274,7 +279,9 @@ document.getElementById("form").addEventListener("submit", async e=>{
     fecha_nacimiento: fecha_nacimiento.value,
     empresa: empresa.value,
     cargo: cargo.value,
-    locacion: locacion.value,
+    locacion: locacion.value === "Otro"
+      ? document.getElementById("otra_locacion").value
+      : locacion.value,
     fecha_ingreso: fecha_ingreso.value,
     telefono: telefono.value,
     correo: correo.value,
@@ -291,6 +298,17 @@ document.getElementById("form").addEventListener("submit", async e=>{
     condicion: condicion.value,
     emergencia: emergencia.value
   };
+  const locacionSelect = document.getElementById("locacion");
+const otraLocacionContainer = document.getElementById("otraLocacionContainer");
+
+locacionSelect.addEventListener("change", () => {
+  if (locacionSelect.value === "Otro") {
+    otraLocacionContainer.style.display = "block";
+  } else {
+    otraLocacionContainer.style.display = "none";
+    document.getElementById("otra_locacion").value = "";
+  }
+});
 
   const res = await fetch(`${API_URL}/registro_medico`, {
     method:"POST",
