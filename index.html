@@ -81,25 +81,30 @@ button {
 <h2>FICHA MÉDICA</h2>
 
 <p>
-Bienvenido a Helmerich & Payne Colombia... (texto completo igual que enviaste)
+Bienvenido a Helmerich & Payne Colombia, estamos comprometidos a proteger su salud y seguridad, contamos con los medios y el personal idóneo para prevenir o atender una emergencia.  Para esto requerimos que nos brinde la información de salud que debemos conocer previamente.  En caso de presentarse una emergencia médica, usted recibirá atención inicial por nuestros profesionales y el tratamiento adecuado, de acuerdo con los protocolos médicos de atención aprobados por la legislación Colombiana. Al firmar esta fícha médica, autoriza al personal médico de H&P a atenderlo y efectuar los procedimientos médicos necesarios para obtener un diagnóstico y proteger su salud e integridad física, los profesionales de salud, le indicarán previamente los posibles efectos adversos y/o las contraindicaciones y así mismo le informarán sobre los derechos y deberes como paciente.
 </p>
 
 <label>*Nombre</label>
 <input id="nombre" required>
 
 <label>*C.C. /ID</label>
+<label >Escriba su número de cédula, pasaporte o identificación, sin puntos, guiones, ni comas</label>
 <input id="documento" required>
 
 <label>*Fecha de nacimiento</label>
 <input type="date" id="fecha_nacimiento" required>
 
 <label>*Empresa</label>
+<label>Escriba el nombre o razón social de la empresa o compañía para la cual trabaja
+</label>
 <input id="empresa" required>
 
 <label>*Cargo</label>
+<label>Escriba el cargo o posición que ocupa en su empresa</label>
 <input id="cargo" required>
 
 <label>*Locación</label>
+<label>Seleccione su sitio de trabajo o la locación a la cual ingresa</label>
 <select id="locacion" required>
 <option>Oficinas Bogotá</option>
 <option>Base Yopal Casanare</option>
@@ -110,6 +115,7 @@ Bienvenido a Helmerich & Payne Colombia... (texto completo igual que enviaste)
 </select>
 
 <label>Fecha ingreso</label>
+<label>Registre la fecha en que planea ingresar a la locación, si no le aplica, no registre ninguna fecha (No se refiere a la fecha de ingreso a trabajar en su empresa)</label>
 <input type="date" id="fecha_ingreso">
 
 <label>*Teléfono</label>
@@ -119,17 +125,20 @@ Bienvenido a Helmerich & Payne Colombia... (texto completo igual que enviaste)
 <input id="correo" required>
 
 <label>*EPS</label>
+<label>Entidad Promotora de Salud a la cual se encuentra afiliado</label>
 <input id="eps" required>
 
 <label>*ARL</label>
+<label>Administradora de Riesgos Laborales a la cual se encuentra afiliado</label>
 <input id="arl" required>
 
-<h3>Antecedentes</h3>
+<h3>Antecedentes Medicos</h3>
 
-<label>Enfermedad actual</label>
+<label>Antecedentes Médicos:</label>
 <textarea id="enfermedad_actual"></textarea>
 
-<label>*Enfermedades</label>
+<label>*Enfermedad actual</label>
+<label>Si actualmente le han diagnosticado o está en tratamiento para alguna de las siguientes enfermedades, por favor señalela a continuación</label>
 <select id="enfermedades">
 <option>Hipertensión</option>
 <option>Diabetes</option>
@@ -139,16 +148,19 @@ Bienvenido a Helmerich & Payne Colombia... (texto completo igual que enviaste)
 <option>Otra</option>
 </select>
 
-<label>Otra enfermedad</label>
+<label>¿Actualmente presenta alguna otra enfermedad?:</label>
+<label>Por favor menciónela o descríbala a continuación</label>
 <textarea id="otra_enfermedad"></textarea>
 
 <label>Cirugías</label>
+<label>Si le han realizado alguna cirugía o procedimiento quirúrgico por favor descríbalo a continuación</label>
 <textarea id="cirugias"></textarea>
 
 <label>Traumas</label>
+<label>Si ha sufrido golpes, torceduras, quemaduras, cortadas, o cualquier otro trauma grave, por favor descríbalo a continuación</label>
 <textarea id="traumas"></textarea>
 
-<label>Medicamentos</label>
+<label>¿Está consumiendo algún medicamento actualmente?:</label>
 <textarea id="medicamentos"></textarea>
 
 <label>*Tipo de sangre</label>
@@ -160,12 +172,15 @@ Bienvenido a Helmerich & Payne Colombia... (texto completo igual que enviaste)
 </select>
 
 <label>Alergias</label>
+<label>Si conoce que padezca algún tipo de alergia, por favor descríbala a continuación</label>
 <textarea id="alergias"></textarea>
 
-<label>Condición médica</label>
+<label>¿Presenta alguna condición médica que debamos conocer?:</label>
+<label>Por favor descríbala a continuacion</label>
 <textarea id="condicion"></textarea>
 
-<label>*Contacto emergencia</label>
+<label>*En caso de presentarse una emergencia, ¿a quién deberíamos dar aviso?:</label>
+<label>Indique el nombre de la persona para dar aviso en caso de emergencia y sus datos de contacto (teléfono, e-mail, etc)</label>
 <textarea id="emergencia" required></textarea>
 
 <button>Enviar</button>
