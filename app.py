@@ -8,7 +8,7 @@ CORS(app)
 
 # 🔐 SUPABASE
 SUPABASE_URL = "https://ybkycakkwudoluirrcio.supabase.co"
-SUPABASE_ANON_KEY = "TU_ANON_KEY_AQUI"
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlia3ljYWtrd3Vkb2x1aXJyY2lvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NDkwODYsImV4cCI6MjA5MTIyNTA4Nn0.IoDGWdDVnOIBFTjnWD80fckOJzO4RshU8IfTtcu2xW8"
 
 # 🏠 HOME
 @app.route("/")
