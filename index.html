@@ -68,6 +68,12 @@ p {
   color:var(--blue);
 }
 
+.subtexto {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
 /* 🔹 INPUTS */
 input, select, textarea {
   width:100%;
@@ -117,93 +123,135 @@ button {
 
 <h2>FICHA MÉDICA</h2>
 
-<p>
-Bienvenido a Helmerich & Payne Colombia, estamos comprometidos a proteger su salud y seguridad, contamos con los medios y el personal idóneo para prevenir o atender una emergencia. Para esto requerimos que nos brinde la información de salud que debemos conocer previamente. En caso de presentarse una emergencia médica, usted recibirá atención inicial por nuestros profesionales y el tratamiento adecuado, de acuerdo con los protocolos médicos de atención aprobados por la legislación Colombiana. Al firmar esta fícha médica, autoriza al personal médico de H&P a atenderlo y efectuar los procedimientos médicos necesarios para obtener un diagnóstico y proteger su salud e integridad física.
+<p style="text-align: justify; line-height: 1.6;">
+Bienvenido a Helmerich & Payne Colombia, estamos comprometidos a proteger su salud y seguridad, contamos con los medios y el personal idóneo para prevenir o atender una emergencia. Para esto requerimos que nos brinde la información de salud que debemos conocer previamente. En caso de presentarse una emergencia médica, usted recibirá atención inicial por nuestros profesionales y el tratamiento adecuado, de acuerdo con los protocolos médicos de atención aprobados por la legislación Colombiana. Al firmar esta ficha médica, autoriza al personal médico de H&P a atenderlo y efectuar los procedimientos médicos necesarios para obtener un diagnóstico y proteger su salud e integridad física.
 </p>
 
 <div class="field-title">*Nombre</div>
 <input id="nombre" required>
 
-<div class="field-title">*C.C. /ID</div>
-<p>Escriba su número de cédula, pasaporte o identificación, sin puntos, guiones, ni comas</p>
+<div class="field-title">*C.C. / ID</div>
+<div class="subtexto">
+  Escriba su número de cédula, pasaporte o identificación, sin puntos, guiones ni comas
+</div>
 <input id="documento" required>
 
 <div class="field-title">*Fecha de nacimiento</div>
 <input type="date" id="fecha_nacimiento" required>
 
-<div class="field-title">*Empresa</div>
-<label>Escriba el nombre o razón social de la empresa</label>
+<div class="field-title">*Empresa / Compañía</div>
+<div class="subtexto">
+  Escriba el nombre de la empresa para la cual trabaja o razón social. Si es independiente, escriba "Independiente"
+</div>
 <input id="empresa" required>
 
 <div class="field-title">*Cargo</div>
-<label>Escriba el cargo que ocupa</label>
+<div class="subtexto">
+  Escriba el cargo que ocupa en la empresa. Si es independiente, indique su oficio
+</div>
 <input id="cargo" required>
 
 <div class="field-title">*Locación</div>
+<div class="subtexto">
+  Seleccione su sitio de trabajo o la locación a la cual ingresa
+</div>
 <select id="locacion" required>
-<option>Oficinas Bogotá</option>
-<option>Base Yopal Casanare</option>
-<option>Rig 133</option>
-<option>Rig 900</option>
-<option>Rig T618</option>
-<option>Otro</option>
+  <option>Oficinas Bogotá</option>
+  <option>Base Yopal Casanare</option>
+  <option>Rig 133</option>
+  <option>Rig 900</option>
+  <option>Rig T618</option>
+  <option>Otro</option>
 </select>
 
-<div class="field-title">Fecha ingreso</div>
+<div class="field-title">Fecha de ingreso</div>
+<div class="subtexto">
+  Registre la fecha en que planea ingresar a la locación (no corresponde a la fecha de ingreso a su empresa)
+</div>
 <input type="date" id="fecha_ingreso">
 
-<div class="field-title">*Teléfono</div>
+<div class="field-title">*Teléfono / Celular</div>
 <input id="telefono" required>
 
-<div class="field-title">*Correo</div>
+<div class="field-title">*Correo electrónico</div>
 <input id="correo" required>
 
 <div class="field-title">*EPS</div>
+<div class="subtexto">
+  Entidad Promotora de Salud a la cual se encuentra afiliado
+</div>
 <input id="eps" required>
 
 <div class="field-title">*ARL</div>
+<div class="subtexto">
+  Administradora de Riesgos Laborales a la cual se encuentra afiliado
+</div>
 <input id="arl" required>
 
 <div class="field-title">Antecedentes Médicos</div>
+<div class="subtexto">
+  Si ha padecido enfermedades graves o importantes, descríbalas a continuación
+</div>
 <textarea id="enfermedad_actual"></textarea>
 
 <div class="field-title">*Enfermedad actual</div>
+<div class="subtexto">
+  Seleccione si actualmente ha sido diagnosticado o está en tratamiento para alguna de las siguientes enfermedades
+</div>
 <select id="enfermedades">
-<option>Hipertensión</option>
-<option>Diabetes</option>
-<option>Epilepsia</option>
-<option>Dislipidemia</option>
-<option>Ninguna</option>
-<option>Otra</option>
+  <option>Hipertensión</option>
+  <option>Diabetes</option>
+  <option>Epilepsia</option>
+  <option>Dislipidemia</option>
+  <option>Ninguna</option>
+  <option>Otra</option>
 </select>
 
-<div class="field-title">Otra enfermedad</div>
+<div class="field-title">¿Presenta alguna otra enfermedad?</div>
+<div class="subtexto">
+  Descríbala a continuación
+</div>
 <textarea id="otra_enfermedad"></textarea>
 
 <div class="field-title">Cirugías</div>
+<div class="subtexto">
+  Describa cualquier cirugía o procedimiento quirúrgico realizado
+</div>
 <textarea id="cirugias"></textarea>
 
 <div class="field-title">Traumas</div>
+<div class="subtexto">
+  Describa golpes, torceduras, quemaduras, cortadas u otros traumas graves
+</div>
 <textarea id="traumas"></textarea>
 
-<div class="field-title">Medicamentos</div>
+<div class="field-title">¿Está consumiendo medicamentos actualmente?</div>
 <textarea id="medicamentos"></textarea>
 
 <div class="field-title">*Tipo de sangre</div>
 <select id="sangre" required>
-<option>A+</option><option>A-</option>
-<option>B+</option><option>B-</option>
-<option>AB+</option><option>AB-</option>
-<option>O+</option><option>O-</option>
+  <option>A+</option><option>A-</option>
+  <option>B+</option><option>B-</option>
+  <option>AB+</option><option>AB-</option>
+  <option>O+</option><option>O-</option>
 </select>
 
 <div class="field-title">Alergias</div>
+<div class="subtexto">
+  Describa cualquier alergia conocida
+</div>
 <textarea id="alergias"></textarea>
 
-<div class="field-title">Condición médica</div>
+<div class="field-title">Condición médica relevante</div>
+<div class="subtexto">
+  Indique cualquier condición que debamos conocer
+</div>
 <textarea id="condicion"></textarea>
 
-<div class="field-title">*Contacto emergencia</div>
+<div class="field-title">*Contacto de emergencia</div>
+<div class="subtexto">
+  Indique nombre y datos de contacto (teléfono, correo, etc.)
+</div>
 <textarea id="emergencia" required></textarea>
 
 <button>Enviar</button>
