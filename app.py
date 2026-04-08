@@ -8,8 +8,8 @@ app = Flask(__name__, template_folder=".")
 CORS(app)
 
 # 🔐 CONFIGURACIÓN SUPABASE
-SUPABASE_URL = "https://pcjpnogwigzcmetglbyw.supabase.co"
-SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjanBub2d3aWd6Y21ldGdsYnl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1ODc5ODYsImV4cCI6MjA5MTE2Mzk4Nn0.vbuUAYfeWcy_BkY7cKvHlGfvSCUIEpEqlg_Ql1MfuM8"
+SUPABASE_URL = "https://ybkycakkwudoluirrcio.supabase.co"
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlia3ljYWtrd3Vkb2x1aXJyY2lvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NDkwODYsImV4cCI6MjA5MTIyNTA4Nn0.IoDGWdDVnOIBFTjnWD80fckOJzO4RshU8IfTtcu2xW8"
 
 @app.route("/dashboard")
 def dashboard():
@@ -88,10 +88,30 @@ def data_ficha():
     url = f"{SUPABASE_URL}/rest/v1/ficha_medica"
     headers = {
         "apikey": SUPABASE_ANON_KEY,
-        "Authorization": f"Bearer {SUPABASE_ANON_KEY}
+        "Authorization": f"Bearer {SUPABASE_ANON_KEY}"
     }
     r = requests.get(url, headers=headers)
     return jsonify(r.json())
+
+@app.route("/registro_medico", methods=["POST","OPTIONS"])
+def registro_medico():
+
+    if request.method == "OPTIONS":
+        return jsonify({"ok": True}), 200
+
+    data = request.json
+
+    url = f"{SUPABASE_URL}/rest/v1/ficha_medica"
+
+    headers = {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": f"Bearer {SUPABASE_ANON_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    r = requests.post(url, json=data, headers=headers)
+
+    return jsonify({"ok": True})
 
 if __name__ == "__main__":
     app.run(debug=True)

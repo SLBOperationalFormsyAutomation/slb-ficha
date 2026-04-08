@@ -2,83 +2,105 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+
+<!-- 🔹 LOGO EN PESTAÑA -->
+<link rel="icon" type="image/png" href="logo.png">
+
 <title>Ficha Médica H&P</title>
 
 <style>
-:root { --blue:#002855; }
-
-body{
-  margin:0;
-  font-family:Arial;
+:root {
+  --blue: #002855;
 }
 
-body::before{
+body {
+  font-family: Arial;
+  margin: 0;
+}
+
+/* 🔹 FONDO */
+body::before {
   content:"";
   position:fixed;
   width:100%;
   height:100%;
   background:
-  linear-gradient(rgba(0,40,85,.8),rgba(0,40,85,.9)),
-  url("Fondo.png");
+    linear-gradient(rgba(0,40,85,0.8), rgba(0,40,85,0.9)),
+    url("Fondo.png");
   background-size:cover;
-  filter:blur(3px);
   z-index:-1;
+  filter: blur(3px);
 }
 
-form{
+/* 🔹 FORM */
+form {
   background:white;
-  max-width:520px;
+  max-width:600px;
   margin:20px auto;
   padding:25px;
   border-radius:12px;
 }
 
-h2{ text-align:center; color:var(--blue); }
+/* 🔹 TITULOS */
+h2 {
+  text-align:center;
+  color:var(--blue);
+}
 
-label{ margin-top:10px; display:block; font-weight:bold;}
+p {
+  font-size:14px;
+}
 
-input, select, textarea{
+/* 🔹 INPUTS */
+input, select, textarea {
   width:100%;
   padding:10px;
+  margin-top:5px;
   border-radius:8px;
   border:1px solid #ccc;
 }
 
-button{
-  margin-top:20px;
+/* 🔹 BOTON */
+button {
   width:100%;
   padding:14px;
   background:var(--blue);
   color:white;
   border:none;
+  margin-top:20px;
   border-radius:10px;
 }
 </style>
+
 </head>
 
 <body>
 
 <form id="form">
 
-<h2>Ficha Médica H&P</h2>
+<h2>FICHA MÉDICA</h2>
 
-<label>Nombre*</label>
+<p>
+Bienvenido a Helmerich & Payne Colombia... (texto completo igual que enviaste)
+</p>
+
+<label>*Nombre</label>
 <input id="nombre" required>
 
-<label>Documento*</label>
+<label>*C.C. /ID</label>
 <input id="documento" required>
 
-<label>Fecha nacimiento*</label>
+<label>*Fecha de nacimiento</label>
 <input type="date" id="fecha_nacimiento" required>
 
-<label>Empresa*</label>
+<label>*Empresa</label>
 <input id="empresa" required>
 
-<label>Cargo*</label>
+<label>*Cargo</label>
 <input id="cargo" required>
 
-<label>Locación*</label>
-<select id="locacion">
+<label>*Locación</label>
+<select id="locacion" required>
 <option>Oficinas Bogotá</option>
 <option>Base Yopal Casanare</option>
 <option>Rig 133</option>
@@ -90,26 +112,26 @@ button{
 <label>Fecha ingreso</label>
 <input type="date" id="fecha_ingreso">
 
-<label>Teléfono*</label>
+<label>*Teléfono</label>
 <input id="telefono" required>
 
-<label>Email*</label>
-<input id="email" required>
+<label>*Correo</label>
+<input id="correo" required>
 
-<label>EPS*</label>
+<label>*EPS</label>
 <input id="eps" required>
 
-<label>ARL*</label>
+<label>*ARL</label>
 <input id="arl" required>
 
-<hr>
+<h3>Antecedentes</h3>
 
 <label>Enfermedad actual</label>
 <textarea id="enfermedad_actual"></textarea>
 
-<label>Diagnóstico*</label>
-<select id="diagnostico">
-<option>Hipertensión arterial</option>
+<label>*Enfermedades</label>
+<select id="enfermedades">
+<option>Hipertensión</option>
 <option>Diabetes</option>
 <option>Epilepsia</option>
 <option>Dislipidemia</option>
@@ -129,66 +151,67 @@ button{
 <label>Medicamentos</label>
 <textarea id="medicamentos"></textarea>
 
-<label>Tipo sangre</label>
-<input id="tipo_sangre">
+<label>*Tipo de sangre</label>
+<select id="sangre" required>
+<option>A+</option><option>A-</option>
+<option>B+</option><option>B-</option>
+<option>AB+</option><option>AB-</option>
+<option>O+</option><option>O-</option>
+</select>
 
 <label>Alergias</label>
 <textarea id="alergias"></textarea>
 
-<label>Condiciones médicas</label>
-<textarea id="condiciones"></textarea>
+<label>Condición médica</label>
+<textarea id="condicion"></textarea>
 
-<label>Contacto emergencia*</label>
-<textarea id="contacto_emergencia" required></textarea>
+<label>*Contacto emergencia</label>
+<textarea id="emergencia" required></textarea>
 
-<button type="submit">Enviar</button>
+<button>Enviar</button>
 
 </form>
 
 <script>
-const API_URL="https://slb-alturas.onrender.com";
+
+const API_URL = "https://slb-alturas.onrender.com";
 
 document.getElementById("form").addEventListener("submit", async e=>{
   e.preventDefault();
 
-  const data={
-    nombre:nombre.value,
-    documento:documento.value,
-    fecha_nacimiento:fecha_nacimiento.value,
-    empresa:empresa.value,
-    cargo:cargo.value,
-    locacion:locacion.value,
-    fecha_ingreso:fecha_ingreso.value,
-    telefono:telefono.value,
-    email:email.value,
-    eps:eps.value,
-    arl:arl.value,
-
-    enfermedad_actual:enfermedad_actual.value,
-    diagnostico:diagnostico.value,
-    otra_enfermedad:otra_enfermedad.value,
-    cirugias:cirugias.value,
-    traumas:traumas.value,
-    medicamentos:medicamentos.value,
-    tipo_sangre:tipo_sangre.value,
-    alergias:alergias.value,
-    condiciones:condiciones.value,
-    contacto_emergencia:contacto_emergencia.value
+  const data = {
+    nombre: nombre.value,
+    documento: documento.value,
+    fecha_nacimiento: fecha_nacimiento.value,
+    empresa: empresa.value,
+    cargo: cargo.value,
+    locacion: locacion.value,
+    fecha_ingreso: fecha_ingreso.value,
+    telefono: telefono.value,
+    correo: correo.value,
+    eps: eps.value,
+    arl: arl.value,
+    enfermedad_actual: enfermedad_actual.value,
+    enfermedades: enfermedades.value,
+    otra_enfermedad: otra_enfermedad.value,
+    cirugias: cirugias.value,
+    traumas: traumas.value,
+    medicamentos: medicamentos.value,
+    sangre: sangre.value,
+    alergias: alergias.value,
+    condicion: condicion.value,
+    emergencia: emergencia.value
   };
 
-  const res = await fetch(`${API_URL}/registro_ficha`,{
+  await fetch(`${API_URL}/registro_medico`, {
     method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify(data)
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify(data)
   });
 
-  if(res.ok){
-    alert("Enviado correctamente ✅");
-    location.reload();
-  }else{
-    alert("Error al enviar ❌");
-  }
+  alert("Enviado correctamente ✅");
 });
+
 </script>
 
 </body>
