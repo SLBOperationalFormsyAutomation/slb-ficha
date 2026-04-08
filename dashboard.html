@@ -55,12 +55,17 @@ button{
 
 let registros = []
 
-fetch("/data_ficha")
-.then(r=>r.json())
+const API_URL = "https://slb-alturas.onrender.com";
+
+fetch(`${API_URL}/data_ficha`)
+.then(r => r.json())
 .then(data=>{
-    registros = data
-    document.getElementById("total").innerText = data.length
+    registros = data;
+    document.getElementById("total").innerText = data.length;
 })
+.catch(err=>{
+    console.log("Error cargando datos:", err);
+});
 
 function descargarExcel(){
 
