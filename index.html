@@ -2,278 +2,193 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Auto Reporte Alturas</title>
+<title>Ficha Médica H&P</title>
 
 <style>
-:root {
-  --slb-blue: #002855;
+:root { --blue:#002855; }
+
+body{
+  margin:0;
+  font-family:Arial;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  position: relative;
-  min-height: 100vh;
+body::before{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:
+  linear-gradient(rgba(0,40,85,.8),rgba(0,40,85,.9)),
+  url("Fondo.png");
+  background-size:cover;
+  filter:blur(3px);
+  z-index:-1;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  background: 
-    linear-gradient(rgba(0, 40, 85, 0.75), rgba(0, 40, 85, 0.85)),
-    url('Fondo.png');
-
-  background-size: cover;
-  background-position: center;
-
-  filter: blur(3px);
-  z-index: -1;
+form{
+  background:white;
+  max-width:520px;
+  margin:20px auto;
+  padding:25px;
+  border-radius:12px;
 }
 
-/* CONTENEDOR */
-form {
-  background: rgba(255,255,255,0.97);
-  margin: 20px auto;
-  padding: 25px;
-  max-width: 520px;
-  border-radius: 14px;
+h2{ text-align:center; color:var(--blue); }
 
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+label{ margin-top:10px; display:block; font-weight:bold;}
+
+input, select, textarea{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
 }
 
-/* TITULOS */
-h2, h3 {
-  text-align: center;
-  color: var(--slb-blue);
-}
-
-/* INPUTS */
-input, select {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px; /* 🔥 evita zoom en celular */
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-/* CANVAS FIRMA */
-canvas {
-  width: 100%;
-  height: 110px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background: #fff;
-}
-
-/* BOTON */
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 20px;
-  background: var(--slb-blue);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-/* LABEL */
-label {
-  margin-top: 12px;
-  display: block;
-  font-weight: bold;
-}
-
-/* SEPARADORES */
-hr {
-  margin: 20px 0;
+button{
+  margin-top:20px;
+  width:100%;
+  padding:14px;
+  background:var(--blue);
+  color:white;
+  border:none;
+  border-radius:10px;
 }
 </style>
-
 </head>
 
 <body>
 
 <form id="form">
 
-<h2>Auto Reporte Trabajo en Alturas</h2>
+<h2>Ficha Médica H&P</h2>
 
-<label>Nombre</label>
+<label>Nombre*</label>
 <input id="nombre" required>
 
-<label>Documento</label>
+<label>Documento*</label>
 <input id="documento" required>
 
-<label>Empresa</label>
-<input id="empresa">
+<label>Fecha nacimiento*</label>
+<input type="date" id="fecha_nacimiento" required>
 
-<label>Base/Pozo</label>
-<input id="base_pozo">
+<label>Empresa*</label>
+<input id="empresa" required>
 
-<label>Cliente</label>
-<input id="cliente">
+<label>Cargo*</label>
+<input id="cargo" required>
 
-<label>EPS</label>
-<input id="eps">
+<label>Locación*</label>
+<select id="locacion">
+<option>Oficinas Bogotá</option>
+<option>Base Yopal Casanare</option>
+<option>Rig 133</option>
+<option>Rig 900</option>
+<option>Rig T618</option>
+<option>Otro</option>
+</select>
 
-<label>ARL</label>
-<input id="arl">
+<label>Fecha ingreso</label>
+<input type="date" id="fecha_ingreso">
+
+<label>Teléfono*</label>
+<input id="telefono" required>
+
+<label>Email*</label>
+<input id="email" required>
+
+<label>EPS*</label>
+<input id="eps" required>
+
+<label>ARL*</label>
+<input id="arl" required>
 
 <hr>
 
-<label>¿Médico en locación?</label>
-<select id="medico">
-<option value="no">No</option>
-<option value="si">Sí</option>
+<label>Enfermedad actual</label>
+<textarea id="enfermedad_actual"></textarea>
+
+<label>Diagnóstico*</label>
+<select id="diagnostico">
+<option>Hipertensión arterial</option>
+<option>Diabetes</option>
+<option>Epilepsia</option>
+<option>Dislipidemia</option>
+<option>Ninguna</option>
+<option>Otra</option>
 </select>
 
-<div id="medicoCampos" style="display:none;">
-<label>Tensión</label>
-<input id="tension">
+<label>Otra enfermedad</label>
+<textarea id="otra_enfermedad"></textarea>
 
-<label>Frecuencia</label>
-<input id="frecuencia">
+<label>Cirugías</label>
+<textarea id="cirugias"></textarea>
 
-<label>Oxígeno</label>
-<input id="oxigeno">
-</div>
+<label>Traumas</label>
+<textarea id="traumas"></textarea>
 
-<h3>Condiciones</h3>
-<div id="preguntas"></div>
+<label>Medicamentos</label>
+<textarea id="medicamentos"></textarea>
 
-<label>
-<input type="checkbox" id="certifica" required>
-Certifico que la información es veraz
-</label>
+<label>Tipo sangre</label>
+<input id="tipo_sangre">
 
-<h3>Firma Trabajador</h3>
-<canvas id="firma1"></canvas>
+<label>Alergias</label>
+<textarea id="alergias"></textarea>
 
-<h3>Firma Coordinador</h3>
-<canvas id="firma2"></canvas>
+<label>Condiciones médicas</label>
+<textarea id="condiciones"></textarea>
+
+<label>Contacto emergencia*</label>
+<textarea id="contacto_emergencia" required></textarea>
 
 <button type="submit">Enviar</button>
 
 </form>
 
 <script>
+const API_URL="https://slb-alturas.onrender.com";
 
-// 🔹 preguntas
-const preguntasTexto = [
-"Examen médico vigente?",
-"Cambio estado ánimo?",
-"Mareo o vértigo?",
-"Dolor físico?",
-"Problemas auditivos?",
-"Enfermedad reciente?",
-"Problemas visuales?",
-"Dificultad respiratoria?",
-"Medicamentos?",
-"Alcohol o sustancias?"
-];
-
-const cont = document.getElementById("preguntas");
-
-preguntasTexto.forEach((p, i) => {
-  cont.innerHTML += `
-    <label>${i+1}. ${p}</label>
-    <select id="p${i}">
-      <option value="NO">NO</option>
-      <option value="SI">SI</option>
-    </select>
-  `;
-});
-
-// 🔹 medico
-document.getElementById("medico").addEventListener("change", e => {
-  document.getElementById("medicoCampos").style.display =
-    e.target.value === "si" ? "block" : "none";
-});
-
-// 🔹 firma
-function activarFirma(canvas){
-  const ctx = canvas.getContext("2d");
-  let dibujando = false;
-
-  canvas.addEventListener("mousedown", e=>{
-    dibujando = true;
-    ctx.moveTo(e.offsetX, e.offsetY);
-  });
-
-  canvas.addEventListener("mousemove", e=>{
-    if(dibujando){
-      ctx.lineTo(e.offsetX, e.offsetY);
-      ctx.stroke();
-    }
-  });
-
-  canvas.addEventListener("mouseup", ()=>dibujando=false);
-
-  canvas.addEventListener("touchmove", e=>{
-    const rect = canvas.getBoundingClientRect();
-    const t = e.touches[0];
-    ctx.lineTo(t.clientX-rect.left, t.clientY-rect.top);
-    ctx.stroke();
-  });
-}
-
-activarFirma(document.getElementById("firma1"));
-activarFirma(document.getElementById("firma2"));
-const API_URL = "https://slb-alturas.onrender.com";
-// 🔹 submit
 document.getElementById("form").addEventListener("submit", async e=>{
   e.preventDefault();
 
-  const preguntas = [];
-  for(let i=0;i<10;i++){
-    preguntas.push(document.getElementById("p"+i).value);
-  }
+  const data={
+    nombre:nombre.value,
+    documento:documento.value,
+    fecha_nacimiento:fecha_nacimiento.value,
+    empresa:empresa.value,
+    cargo:cargo.value,
+    locacion:locacion.value,
+    fecha_ingreso:fecha_ingreso.value,
+    telefono:telefono.value,
+    email:email.value,
+    eps:eps.value,
+    arl:arl.value,
 
-  const data = {
-    nombre: nombre.value,
-    documento: documento.value,
-    empresa: empresa.value,
-    base_pozo: base_pozo.value,
-    cliente: cliente.value,
-    eps: eps.value,
-    arl: arl.value,
-
-    tension: tension.value,
-    frecuencia: frecuencia.value,
-    oxigeno: oxigeno.value,
-
-    certifica: document.getElementById("certifica").checked,
-    preguntas,
-
-    firma_trabajador: firma1.toDataURL(),
-    firma_coordinador: firma2.toDataURL(),
-
-    nombre_trabajador: nombre.value,
-    doc_trabajador: documento.value,
-    rol_trabajador: "Trabajador",
-    fecha_trabajador: new Date().toISOString(),
-
-    nombre_coord: "",
-    doc_coord: "",
-    rol_coord: "Coordinador",
-    fecha_coord: new Date().toISOString()
+    enfermedad_actual:enfermedad_actual.value,
+    diagnostico:diagnostico.value,
+    otra_enfermedad:otra_enfermedad.value,
+    cirugias:cirugias.value,
+    traumas:traumas.value,
+    medicamentos:medicamentos.value,
+    tipo_sangre:tipo_sangre.value,
+    alergias:alergias.value,
+    condiciones:condiciones.value,
+    contacto_emergencia:contacto_emergencia.value
   };
 
-  await fetch(`${API_URL}/registro_alturas`, {
+  const res = await fetch(`${API_URL}/registro_ficha`,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify(data)
+    body:JSON.stringify(data)
   });
 
-  alert("Enviado correctamente ✅");
+  if(res.ok){
+    alert("Enviado correctamente ✅");
+    location.reload();
+  }else{
+    alert("Error al enviar ❌");
+  }
 });
-
 </script>
 
 </body>

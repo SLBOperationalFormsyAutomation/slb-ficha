@@ -31,17 +31,16 @@ def data_alturas():
 def home():
     return render_template("index.html")
 
-@app.route("/registro_alturas", methods=["POST", "OPTIONS"])
-def registro_alturas():
+@app.route("/registro_ficha", methods=["POST", "OPTIONS"])
+def registro_ficha():
 
-    # 🔥 RESPUESTA AL PREFLIGHT
     if request.method == "OPTIONS":
         return jsonify({"ok": True}), 200
 
     data = request.json
 
     try:
-        url = f"{SUPABASE_URL}/rest/v1/autorreporte_alturas"
+        url = f"{SUPABASE_URL}/rest/v1/ficha_medica"
 
         headers = {
             "apikey": SUPABASE_ANON_KEY,
@@ -52,41 +51,26 @@ def registro_alturas():
         payload = {
             "nombre": data["nombre"],
             "documento": data["documento"],
+            "fecha_nacimiento": data["fecha_nacimiento"],
             "empresa": data["empresa"],
-            "base_pozo": data["base_pozo"],
-            "cliente": data["cliente"],
+            "cargo": data["cargo"],
+            "locacion": data["locacion"],
+            "fecha_ingreso": data["fecha_ingreso"],
+            "telefono": data["telefono"],
+            "email": data["email"],
             "eps": data["eps"],
             "arl": data["arl"],
 
-            "tension": data.get("tension", ""),
-            "frecuencia": data.get("frecuencia", ""),
-            "oxigeno": data.get("oxigeno", ""),
-
-            "certifica": data["certifica"],
-
-            "pregunta1": data["preguntas"][0],
-            "pregunta2": data["preguntas"][1],
-            "pregunta3": data["preguntas"][2],
-            "pregunta4": data["preguntas"][3],
-            "pregunta5": data["preguntas"][4],
-            "pregunta6": data["preguntas"][5],
-            "pregunta7": data["preguntas"][6],
-            "pregunta8": data["preguntas"][7],
-            "pregunta9": data["preguntas"][8],
-            "pregunta10": data["preguntas"][9],
-
-            "firma_trabajador": data["firma_trabajador"],
-            "firma_coordinador": data["firma_coordinador"],
-
-            "nombre_trabajador": data["nombre_trabajador"],
-            "doc_trabajador": data["doc_trabajador"],
-            "rol_trabajador": data["rol_trabajador"],
-            "fecha_trabajador": data["fecha_trabajador"],
-
-            "nombre_coord": data["nombre_coord"],
-            "doc_coord": data["doc_coord"],
-            "rol_coord": data["rol_coord"],
-            "fecha_coord": data["fecha_coord"],
+            "enfermedad_actual": data["enfermedad_actual"],
+            "diagnostico": data["diagnostico"],
+            "otra_enfermedad": data["otra_enfermedad"],
+            "cirugias": data["cirugias"],
+            "traumas": data["traumas"],
+            "medicamentos": data["medicamentos"],
+            "tipo_sangre": data["tipo_sangre"],
+            "alergias": data["alergias"],
+            "condiciones": data["condiciones"],
+            "contacto_emergencia": data["contacto_emergencia"],
 
             "fechaRegistro": datetime.now(timezone.utc).isoformat()
         }
@@ -99,6 +83,15 @@ def registro_alturas():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/data_ficha")
+def data_ficha():
+    url = f"{SUPABASE_URL}/rest/v1/ficha_medica"
+    headers = {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": f"Bearer {SUPABASE_ANON_KEY}
+    }
+    r = requests.get(url, headers=headers)
+    return jsonify(r.json())
 
 if __name__ == "__main__":
     app.run(debug=True)
