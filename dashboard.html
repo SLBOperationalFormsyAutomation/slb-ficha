@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Dashboard SLB</title>
+<meta charset="UTF-8">
+<title>Dashboard Ficha Médica</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-body {
-  font-family: Arial;
-  background: #001f3d;
-  color: white;
-  text-align: center;
+body{
+  font-family:Arial;
+  background:#002855;
+  color:white;
+  text-align:center;
 }
 
-.card {
-  background: white;
-  color: black;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
+.card{
+  background:white;
+  color:black;
+  margin:20px;
+  padding:20px;
+  border-radius:10px;
 }
 
-canvas {
-  max-width: 400px;
-  margin: auto;
+button{
+  padding:12px 20px;
+  border:none;
+  border-radius:8px;
+  background:#00aaff;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Dashboard Salud Alturas</h1>
+<h1>Dashboard Ficha Médica</h1>
 
 <div class="card">
   <h3>Total Registros</h3>
@@ -38,45 +44,41 @@ canvas {
 </div>
 
 <div class="card">
-  <h3>Respuestas con Riesgo (SI)</h3>
-  <canvas id="riesgos"></canvas>
+  <button onclick="descargarExcel()">📥 Descargar Excel</button>
 </div>
 
 <script>
 
+let registros = []
+
 fetch("/data_ficha")
-.then(res => res.json())
-.then(data => {
+.then(r=>r.json())
+.then(data=>{
+    registros = data
+    document.getElementById("total").innerText = data.length
+})
 
-  document.getElementById("total").innerText = data.length;
+function descargarExcel(){
 
-  let riesgos = 0;
-  let seguros = 0;
+    let csv = ""
 
-  data.forEach(r => {
-    let tieneRiesgo = false;
+    // encabezados
+    const headers = Object.keys(registros[0])
+    csv += headers.join(",") + "\n"
 
-    for(let i=1;i<=10;i++){
-      if(r["pregunta"+i] === "SI"){
-        tieneRiesgo = true;
-      }
-    }
+    registros.forEach(r=>{
+        let row = headers.map(h => `"${(r[h] || "").toString().replace(/"/g,'""')}"`)
+        csv += row.join(",") + "\n"
+    })
 
-    if(tieneRiesgo) riesgos++;
-    else seguros++;
-  });
+    const blob = new Blob([csv], { type: "text/csv" })
+    const url = window.URL.createObjectURL(blob)
 
-  new Chart(document.getElementById("riesgos"), {
-    type: "pie",
-    data: {
-      labels: ["Riesgo", "Apto"],
-      datasets: [{
-        data: [riesgos, seguros]
-      }]
-    }
-  });
-
-});
+    const a = document.createElement("a")
+    a.href = url
+    a.download = "ficha_medica.csv"
+    a.click()
+}
 
 </script>
 
