@@ -38,4 +38,4 @@ Aplicación web para el registro de información médica previa al ingreso a loc
 - Información usada únicamente para seguridad y atención médica
 
 ## 👨‍💻 Autor
-Desarrollado por **Juan Camilo Tibaduiza**
+Desarrollado por **Juan Camilo Tibaduiza.**
